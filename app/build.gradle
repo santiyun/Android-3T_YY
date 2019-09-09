@@ -1,0 +1,60 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
+    defaultConfig {
+        applicationId "com.yy.orangefilter.ofcamera"
+        minSdkVersion 21 // YY美颜最低要求21，三体SDK最低要求16
+        targetSdkVersion 28
+        versionCode 1
+        versionName "2.2.0"
+        ndk {
+            // 设置支持的SO库架构
+            abiFilters 'armeabi-v7a' //, 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+        }
+    }
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+            assets.srcDirs = ['assets']
+        }
+        release.setRoot('build-types/release')
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.*'], dir: 'libs')
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'com.android.support:appcompat-v7:28.1.1'
+    //Demo需要的第三方库
+    implementation 'com.yanzhenjie:permission:2.0.0-rc1'
+    implementation 'com.gyf.immersionbar:immersionbar:2.3.3-beta15'
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
+    implementation 'com.sospinner:sospinner:1.1.0'
+
+    //YY美颜需要的第三方库
+    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+    implementation 'com.squareup.picasso:picasso:2.71828'
+}
